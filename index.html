@@ -1,249 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jay's Impact Center</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jay’s Impact Foundation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></script>
+  <style>
+    /* --- Colors & Fonts --- */
+    :root {
+      --gold: #FFD700;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --glass: rgba(0,0,0,0.6);
+    }
+    * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; margin:0; padding:0; }
+    body { background-color: var(--black); color: var(--white); overflow-x: hidden; }
 
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background:#000;
-    color:#fff;
-  }
+    a { text-decoration: none; }
 
-  /* NAV */
-  nav {
-    width:100%;
-    padding:20px;
-    background:#111;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:10;
-  }
-  nav a {
-    color:#fff;
-    margin-left:20px;
-    text-decoration:none;
-    font-weight:bold;
-  }
-  nav a:hover {
-    color:#f4c542;
-  }
+    h2, h3 { color: var(--gold); }
 
-  /* HERO */
-  .hero {
-    height:90vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    background:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=60') center/cover no-repeat;
-    text-align:center;
-  }
-  .hero h1 {
-    font-size: 3rem;
-    margin:0;
-    text-shadow:0 0 20px #000;
-  }
-  .hero p {
-    font-size:1.2rem;
-    max-width:700px;
-    text-shadow:0 0 10px #000;
-  }
-  .btn {
-    background:#f4c542;
-    color:#000;
-    padding:15px 25px;
-    border-radius:5px;
-    font-weight:bold;
-    text-decoration:none;
-    display:inline-block;
-    margin-top:20px;
-  }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-  /* SECTIONS */
-  section {
-    padding:60px 20px;
-    max-width:1000px;
-    margin:auto;
-  }
-  h2 {
-    color:#f4c542;
-    margin-bottom:10px;
-  }
+    /* --- NAVBAR --- */
+    nav {
+      position: sticky;
+      top:0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: var(--glass);
+      border-bottom: 2px solid var(--gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+    nav .logo { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
+    nav ul { display: flex; gap: 20px; list-style:none; }
+    nav ul li a { color: var(--white); font-weight: 600; transition: 0.3s; }
+    nav ul li a:hover { color: var(--gold); }
 
-  /* GALLERY */
-  .gallery {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:15px;
-  }
-  .gallery img {
-    width:100%;
-    border-radius:10px;
-  }
+    /* --- HERO --- */
+    .hero {
+      height: 100vh;
+      background: url('https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/A17732CB-23EB-463E-B5BC-8E2480667060.jpeg?raw=true') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+    }
+    .hero::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,0.6);
+    }
+    .hero-content { position: relative; z-index: 1; animation: fadeIn 2s ease forwards; }
+    .hero h1 { font-size: 3rem; margin-bottom: 20px; text-shadow: 0 0 20px var(--gold); }
+    .hero p { font-size: 1.5rem; margin-bottom: 30px; }
+    .hero .buttons a {
+      padding: 15px 30px;
+      margin: 0 10px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .hero .buttons a.cta-donate { background: var(--gold); color: var(--black); }
+    .hero .buttons a.cta-donate:hover { box-shadow: 0 0 20px var(--gold); }
+    .hero .buttons a.cta-involve { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+    .hero .buttons a.cta-involve:hover { background: var(--gold); color: var(--black); }
 
-  /* FORM */
-  .form-box {
-    background:#111;
-    padding:30px;
-    border-radius:10px;
-  }
-  .form-box input,
-  .form-box textarea {
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border-radius:5px;
-    border:none;
-  }
-  .form-box button {
-    width:100%;
-    background:#f4c542;
-    border:none;
-    padding:15px;
-    margin-top:10px;
-    font-weight:bold;
-    border-radius:5px;
-  }
+    @keyframes fadeIn { from {opacity:0; transform: translateY(50px);} to {opacity:1; transform: translateY(0);} }
 
-  /* FAQ */
-  .faq-item {
-    margin-bottom:15px;
-    background:#111;
-    padding:15px;
-    border-radius:8px;
-    cursor:pointer;
-  }
-  .faq-item p {
-    display:none;
-    margin-top:10px;
-  }
+    /* --- SECTIONS --- */
+    section { padding: 80px 0; }
+    .text-center { text-align: center; }
 
-  /* FOOTER */
-  footer {
-    background:#111;
-    padding:30px;
-    text-align:center;
-  }
-</style>
+    /* --- ABOUT --- */
+    #about p { max-width: 800px; margin: 20px auto; font-size: 1.2rem; line-height: 1.8; }
+
+    /* --- PROGRAM PHOTOS --- */
+    .programs-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+    .program-card { position: relative; overflow: hidden; border: 3px solid var(--gold); border-radius: 15px; transition: transform 0.3s; }
+    .program-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .program-card:hover { transform: scale(1.05); }
+    .program-card label { position: absolute; bottom: 10px; left: 10px; font-weight: 700; color: var(--gold); background: rgba(0,0,0,0.6); padding: 5px 10px; border-radius: 5px; }
+
+    /* --- VIDEO / EMBEDS --- */
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height:0; overflow:hidden; max-width: 100%; border: 3px solid var(--gold); border-radius:15px; margin:0 auto; }
+    .video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
+
+    /* --- SIGNUP FORMS --- */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:30px; }
+    form { background: var(--white); color: var(--black); padding: 30px; border-radius: 15px; border: 3px solid var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    form h3 { margin-bottom: 20px; }
+    form input, form textarea { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border:1px solid #ccc; }
+    form button { width: 100%; padding:15px; font-weight:700; border:none; border-radius:50px; background: var(--gold); color: var(--black); cursor:pointer; transition:0.3s; }
+    form button:hover { box-shadow: 0 0 20px var(--gold); }
+    .success-msg { color: green; display: none; margin-top:10px; text-align:center; }
+
+    /* --- DONATE --- */
+    #donate a { display: inline-block; padding: 15px 40px; border-radius:50px; font-weight:700; transition:0.3s; }
+    #donate a:hover { box-shadow: 0 0 20px var(--gold); }
+
+    /* --- FAQ --- */
+    .faq-item { margin-bottom: 20px; border:2px solid var(--gold); border-radius:15px; overflow:hidden; }
+    .faq-item button { width: 100%; padding:15px; font-weight:600; background: var(--black); color: var(--gold); border:none; text-align:left; cursor:pointer; }
+    .faq-item .answer { padding:15px; background: #111; display:none; color: var(--white); }
+
+    /* --- FOOTER --- */
+    footer { background: var(--black); border-top: 2px solid var(--gold); padding:30px 20px; text-align:center; }
+    footer a { color: var(--gold); margin: 0 10px; font-weight:600; }
+    footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
+
+    @media(max-width:768px){ .hero h1{font-size:2.2rem;} .hero p{font-size:1rem;} }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div><strong>Jay's Impact Center</strong></div>
-  <div>
-    <a href="#about">About</a>
-    <a href="#programs">Programs</a>
-    <a href="#signup">Join</a>
-    <a href="#donate">Donate</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">Jay’s Impact</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#signup">Sign Up</a></li>
+      <li><a href="#donate">Donate</a></li>
+    </ul>
+  </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>Empowering Youth Through Education & Opportunity</h1>
-  <p>Jay's Impact Center is dedicated to creating real opportunities, mentorship, and community development to help young people succeed.</p>
-  <a class="btn" href="#signup">Join Our Mission</a>
-</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Empowering Youth. Transforming Futures.</h1>
+      <p>Jay’s Impact Foundation — building leaders, one life at a time.</p>
+      <div class="buttons">
+        <a href="#donate" class="cta-donate">Donate</a>
+        <a href="#signup" class="cta-involve">Get Involved</a>
+      </div>
+    </div>
+  </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <h2>About Us</h2>
-  <p>Jay's Impact Center is a community initiative committed to academic development, leadership training, life skills, and real-world success opportunities for youth and families.</p>
-</section>
+  <!-- ABOUT -->
+  <section id="about" class="text-center">
+    <div class="container">
+      <h2>About Us</h2>
+      <p>Jay’s Impact Foundation is committed to shaping the next generation of leaders through mentorship, character development, discipline, and youth empowerment. Our programs focus on confidence, teamwork, and providing safe spaces for young people to grow.</p>
+    </div>
+  </section>
 
-<!-- PROGRAMS -->
-<section id="programs">
-  <h2>Our Programs</h2>
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=60">
-    <img src="https://images.unsplash.com/photo-1484249170766-998fa6efe3c0?auto=format&fit=crop&w=600&q=60">
-    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=60">
-    <img src="https://images.unsplash.com/photo-1510936111840-65e151ad71bb?auto=format&fit=crop&w=600&q=60">
-  </div>
-</section>
+  <!-- PROGRAM PHOTOS -->
+  <section id="programs" class="text-center">
+    <div class="container">
+      <h2>Programs Showcase</h2>
+      <div class="programs-grid">
+        <div class="program-card">
+          <img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0075.jpeg?raw=true" alt="Workshop Session">
+          <label>Workshop Session</label>
+        </div>
+        <div class="program-card">
+          <img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0153.jpeg?raw=true" alt="Community Event">
+          <label>Community Event</label>
+        </div>
+        <div class="program-card">
+          <img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_1908.jpeg?raw=true" alt="Youth Leadership Class">
+          <label>Youth Leadership Class</label>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- YOUTUBE -->
-<section>
-  <h2>Our Story</h2>
-  <iframe width="100%" height="420" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0"></iframe>
-</section>
+  <!-- OUR STORY -->
+  <section id="story" class="text-center">
+    <div class="container">
+      <h2>Our Story</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/zgNj6GWTLEo" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
 
-<!-- INSTAGRAM -->
-<section>
-  <h2>Follow Us on Instagram</h2>
-  <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/jaysimpact" data-instgrm-version="14"></blockquote>
-  <script async src="//www.instagram.com/embed.js"></script>
-</section>
+  <!-- SUCCESS STORIES -->
+  <section id="success" class="text-center">
+    <div class="container">
+      <h2>Success Stories</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.instagram.com/reel/DIGq1QSgvwP/embed" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
 
-<!-- SIGNUP -->
-<section id="signup">
-  <h2>Join Our Program</h2>
-  <div class="form-box">
-    <form action="https://formsubmit.co/jaysimactcenter@gmail.com" method="POST">
-      <input type="text" name="Name" placeholder="Full Name" required>
-      <input type="email" name="Email" placeholder="Email" required>
-      <textarea name="Message" placeholder="Tell us why you want to join" rows="5"></textarea>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-</section>
+  <!-- SIGN-UP FORMS -->
+  <section id="signup" class="text-center">
+    <div class="container">
+      <h2>Sign Up</h2>
+      <div class="form-grid">
+        <!-- Volunteer Form -->
+        <form id="volunteer-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+          <h3>Volunteer Sign-Up</h3>
+          <input type="text" name="Name" placeholder="Full Name" required>
+          <input type="email" name="Email" placeholder="Email Address" required>
+          <textarea name="Message" placeholder="Why do you want to volunteer?" required></textarea>
+          <button type="submit">Submit</button>
+          <p class="success-msg">Thank you! Your submission has been received.</p>
+        </form>
 
-<!-- DONATE -->
-<section id="donate">
-  <h2>Donate</h2>
-  <p>Your support helps us serve our students and community.</p>
-  <a class="btn" href="#">Donate Now</a>
-</section>
+        <!-- Kids Program Form -->
+        <form id="kids-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+          <h3>Kids Program Sign-Up</h3>
+          <input type="text" name="ParentName" placeholder="Parent Name" required>
+          <input type="text" name="ChildName" placeholder="Child Name" required>
+          <input type="number" name="ChildAge" placeholder="Child Age" required>
+          <textarea name="Notes" placeholder="Notes"></textarea>
+          <button type="submit">Submit</button>
+          <p class="success-msg">Thank you! Your submission has been received.</p>
+        </form>
+      </div>
+    </div>
+  </section>
 
-<!-- FAQ -->
-<section>
-  <h2>FAQ</h2>
+  <!-- DONATE -->
+  <section id="donate" class="text-center">
+    <div class="container">
+      <h2>Support the Mission</h2>
+      <p>Your donations help us change lives, expand programs, and reach more youth.</p>
+      <a href="https://buy.stripe.com/8x228q7hw6UD0PdazN">Donate Now</a>
+    </div>
+  </section>
 
-  <div class="faq-item">
-    <strong>What age groups do you serve?</strong>
-    <p>We primarily serve youth ages 10–19.</p>
-  </div>
+  <!-- FAQ -->
+  <section id="faq" class="text-center">
+    <div class="container">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <button onclick="toggleAnswer(this)">What does Jay’s Impact Foundation do?</button>
+        <div class="answer">We mentor youth, develop leadership skills, and provide safe spaces for growth.</div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleAnswer(this)">How can I enroll my child?</button>
+        <div class="answer">Use the Kids Program sign-up form above or contact us via email.</div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleAnswer(this)">How can I volunteer?</button>
+        <div class="answer">Complete the Volunteer sign-up form above and we will reach out.</div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleAnswer(this)">Where does donation money go?</button>
+        <div class="answer">All donations fund programs, events, mentorship, and community outreach.</div>
+      </div>
+    </div>
+  </section>
 
-  <div class="faq-item">
-    <strong>Do programs cost money?</strong>
-    <p>No — this is a community initiative and participation is free.</p>
-  </div>
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Jay’s Impact Foundation</p>
+    <div>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="mailto:info@jaysimpact.org">info@jaysimpact.org</a>
+    </div>
+  </footer>
 
-  <div class="faq-item">
-    <strong>How do I get involved?</strong>
-    <p>Sign up in the form above or contact us directly.</p>
-  </div>
-</section>
+  <script>
+    // FAQ toggle
+    function toggleAnswer(btn){
+      const ans = btn.nextElementSibling;
+      ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+    }
 
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Email: jaysimactcenter@gmail.com</p>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  © 2025 Jay's Impact Center – All Rights Reserved
-</footer>
-
-<script>
-  // FAQ Toggle
-  document.querySelectorAll(".faq-item").forEach(item => {
-    item.addEventListener("click", () => {
-      let p = item.querySelector("p");
-      p.style.display = p.style.display === "block" ? "none" : "block";
+    // Form submission message
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', e => {
+        setTimeout(()=> {
+          form.querySelector('.success-msg').style.display = 'block';
+        }, 500);
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
