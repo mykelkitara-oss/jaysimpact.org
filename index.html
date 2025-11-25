@@ -1,954 +1,249 @@
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { Button } from "@/components/ui/button.tsx";
-import { Menu, X, ChevronDown, Mail, Instagram } from "lucide-react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jay's Impact Center</title>
 
-export default function Index() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [submissionType, setSubmissionType] = useState<string>("");
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:#000;
+    color:#fff;
+  }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  /* NAV */
+  nav {
+    width:100%;
+    padding:20px;
+    background:#111;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  nav a {
+    color:#fff;
+    margin-left:20px;
+    text-decoration:none;
+    font-weight:bold;
+  }
+  nav a:hover {
+    color:#f4c542;
+  }
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const submitted = params.get("submitted");
-    if (submitted) {
-      setSubmissionType(submitted);
-      setShowSuccessMessage(true);
-      setTimeout(() => setShowSuccessMessage(false), 8000);
-    }
-  }, []);
+  /* HERO */
+  .hero {
+    height:90vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=60') center/cover no-repeat;
+    text-align:center;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    margin:0;
+    text-shadow:0 0 20px #000;
+  }
+  .hero p {
+    font-size:1.2rem;
+    max-width:700px;
+    text-shadow:0 0 10px #000;
+  }
+  .btn {
+    background:#f4c542;
+    color:#000;
+    padding:15px 25px;
+    border-radius:5px;
+    font-weight:bold;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:20px;
+  }
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setMobileMenuOpen(false);
-    }
-  };
+  /* SECTIONS */
+  section {
+    padding:60px 20px;
+    max-width:1000px;
+    margin:auto;
+  }
+  h2 {
+    color:#f4c542;
+    margin-bottom:10px;
+  }
 
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Success Message Banner */}
-      {showSuccessMessage && (
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -100, opacity: 0 }}
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-primary text-primary-foreground px-8 py-4 rounded-xl shadow-2xl shadow-primary/50 border-2 border-primary max-w-md w-full mx-4"
-        >
-          <div className="text-center">
-            <p className="font-bold text-lg mb-1">✅ Thank You!</p>
-            <p className="text-sm">
-              {submissionType === "volunteer"
-                ? "Your volunteer application has been received. We'll contact you soon!"
-                : "Your enrollment request has been received. We'll be in touch shortly!"}
-            </p>
-          </div>
-        </motion.div>
-      )}
+  /* GALLERY */
+  .gallery {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+  }
+  .gallery img {
+    width:100%;
+    border-radius:10px;
+  }
 
-      {/* Navigation */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-black/80 backdrop-blur-xl border-b border-primary/30 shadow-lg shadow-primary/10"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-3"
-            >
-              <div className="text-2xl font-bold text-primary">Jay's Impact</div>
-            </motion.div>
+  /* FORM */
+  .form-box {
+    background:#111;
+    padding:30px;
+    border-radius:10px;
+  }
+  .form-box input,
+  .form-box textarea {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:5px;
+    border:none;
+  }
+  .form-box button {
+    width:100%;
+    background:#f4c542;
+    border:none;
+    padding:15px;
+    margin-top:10px;
+    font-weight:bold;
+    border-radius:5px;
+  }
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-8">
-              {["Home", "About", "Our Story", "Programs", "Impact", "Success", "Sign Up", "Donate"].map(
-                (item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollToSection(item.toLowerCase().replace(" ", "-"))}
-                    className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                  >
-                    {item}
-                  </button>
-                )
-              )}
-            </div>
+  /* FAQ */
+  .faq-item {
+    margin-bottom:15px;
+    background:#111;
+    padding:15px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .faq-item p {
+    display:none;
+    margin-top:10px;
+  }
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-foreground hover:text-primary"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
+  /* FOOTER */
+  footer {
+    background:#111;
+    padding:30px;
+    text-align:center;
+  }
+</style>
+</head>
+<body>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-primary/30"
-          >
-            <div className="px-4 py-6 space-y-4">
-              {["Home", "About", "Our Story", "Programs", "Impact", "Success", "Sign Up", "Donate"].map(
-                (item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollToSection(item.toLowerCase().replace(" ", "-"))}
-                    className="block w-full text-left text-foreground hover:text-primary transition-colors duration-200 font-medium py-2"
-                  >
-                    {item}
-                  </button>
-                )
-              )}
-            </div>
-          </motion.div>
-        )}
-      </nav>
+<!-- NAV -->
+<nav>
+  <div><strong>Jay's Impact Center</strong></div>
+  <div>
+    <a href="#about">About</a>
+    <a href="#programs">Programs</a>
+    <a href="#signup">Join</a>
+    <a href="#donate">Donate</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
 
-      {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/A17732CB-23EB-463E-B5BC-8E2480667060.jpeg?raw=true"
-            alt="Jay's Impact Foundation"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
-        </div>
+<!-- HERO -->
+<div class="hero">
+  <h1>Empowering Youth Through Education & Opportunity</h1>
+  <p>Jay's Impact Center is dedicated to creating real opportunities, mentorship, and community development to help young people succeed.</p>
+  <a class="btn" href="#signup">Join Our Mission</a>
+</div>
 
-        {/* Animated Gradient Background */}
-        <motion.div
-          animate={{
-            background: [
-              "radial-gradient(circle at 20% 50%, rgba(194, 163, 89, 0.15) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 50%, rgba(194, 163, 89, 0.15) 0%, transparent 50%)",
-              "radial-gradient(circle at 50% 80%, rgba(194, 163, 89, 0.15) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 50%, rgba(194, 163, 89, 0.15) 0%, transparent 50%)",
-            ],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 z-10"
-        />
+<!-- ABOUT -->
+<section id="about">
+  <h2>About Us</h2>
+  <p>Jay's Impact Center is a community initiative committed to academic development, leadership training, life skills, and real-world success opportunities for youth and families.</p>
+</section>
 
-        {/* Hero Content */}
-        <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-bold text-balance mb-6 leading-tight"
-          >
-            <span className="text-foreground">Empowering Youth.</span>
-            <br />
-            <span className="text-primary">Transforming Futures.</span>
-          </motion.h1>
+<!-- PROGRAMS -->
+<section id="programs">
+  <h2>Our Programs</h2>
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=60">
+    <img src="https://images.unsplash.com/photo-1484249170766-998fa6efe3c0?auto=format&fit=crop&w=600&q=60">
+    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=60">
+    <img src="https://images.unsplash.com/photo-1510936111840-65e151ad71bb?auto=format&fit=crop&w=600&q=60">
+  </div>
+</section>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto"
-          >
-            Jay's Impact Foundation — building leaders, one life at a time.
-          </motion.p>
+<!-- YOUTUBE -->
+<section>
+  <h2>Our Story</h2>
+  <iframe width="100%" height="420" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0"></iframe>
+</section>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <Button
-              size="lg"
-              onClick={() => scrollToSection("donate")}
-              className="text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 min-w-[200px]"
-            >
-              Donate
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => scrollToSection("sign-up")}
-              className="text-lg px-8 py-6 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground shadow-lg transition-all duration-300 min-w-[200px]"
-            >
-              Get Involved
-            </Button>
-          </motion.div>
-        </div>
+<!-- INSTAGRAM -->
+<section>
+  <h2>Follow Us on Instagram</h2>
+  <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/jaysimpact" data-instgrm-version="14"></blockquote>
+  <script async src="//www.instagram.com/embed.js"></script>
+</section>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
-        >
-          <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-primary rounded-full"
-            />
-          </div>
-        </motion.div>
-      </section>
+<!-- SIGNUP -->
+<section id="signup">
+  <h2>Join Our Program</h2>
+  <div class="form-box">
+    <form action="https://formsubmit.co/jaysimactcenter@gmail.com" method="POST">
+      <input type="text" name="Name" placeholder="Full Name" required>
+      <input type="email" name="Email" placeholder="Email" required>
+      <textarea name="Message" placeholder="Tell us why you want to join" rows="5"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</section>
 
-      {/* About Section */}
-      <section id="about" className="py-24 px-4 bg-gradient-to-b from-background to-black">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-primary">About</span> <span className="text-foreground">Us</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8" />
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              Jay's Impact Foundation is committed to shaping the next generation of leaders through
-              mentorship, character development, discipline, and youth empowerment. Our programs focus
-              on confidence, teamwork, and providing safe spaces for young people to grow.
-            </p>
-          </motion.div>
+<!-- DONATE -->
+<section id="donate">
+  <h2>Donate</h2>
+  <p>Your support helps us serve our students and community.</p>
+  <a class="btn" href="#">Donate Now</a>
+</section>
 
-          {/* Program Photos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            {[
-              {
-                src: "https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0075.jpeg?raw=true",
-                label: "Workshop Session",
-              },
-              {
-                src: "https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0153.jpeg?raw=true",
-                label: "Community Event",
-              },
-              {
-                src: "https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_1908.jpeg?raw=true",
-                label: "Youth Leadership Class",
-              },
-            ].map((photo, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className="group relative"
-              >
-                <div className="relative overflow-hidden rounded-xl border-4 border-primary shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-500">
-                  <img
-                    src={photo.src}
-                    alt={photo.label}
-                    className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl font-bold text-foreground">{photo.label}</h3>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+<!-- FAQ -->
+<section>
+  <h2>FAQ</h2>
 
-      {/* Our Story Section */}
-      <section id="our-story" className="py-24 px-4 bg-black">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-primary">Our</span> <span className="text-foreground">Story</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto" />
-          </motion.div>
+  <div class="faq-item">
+    <strong>What age groups do you serve?</strong>
+    <p>We primarily serve youth ages 10–19.</p>
+  </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative rounded-xl overflow-hidden border-4 border-primary shadow-2xl shadow-primary/30 mx-auto max-w-md"
-          >
-            <iframe
-              src="https://www.instagram.com/reel/DQRca2BkTOS/embed"
-              className="w-full h-[600px]"
-              frameBorder="0"
-              scrolling="no"
-              allowTransparency
-              title="Our Story"
-            />
-          </motion.div>
-        </div>
-      </section>
+  <div class="faq-item">
+    <strong>Do programs cost money?</strong>
+    <p>No — this is a community initiative and participation is free.</p>
+  </div>
 
-      {/* Interview Section */}
-      <section className="py-24 px-4 bg-gradient-to-b from-black to-background">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-5xl font-bold mb-6 text-foreground">
-              An Interview With <span className="text-primary">Jay's Impact</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto" />
-          </motion.div>
+  <div class="faq-item">
+    <strong>How do I get involved?</strong>
+    <p>Sign up in the form above or contact us directly.</p>
+  </div>
+</section>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative rounded-xl overflow-hidden border-4 border-primary shadow-2xl shadow-primary/30"
-          >
-            <div className="relative pb-[56.25%]">
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/zgNj6GWTLEo"
-                title="An Interview With Jay's Impact"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </motion.div>
-        </div>
-      </section>
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: jaysimactcenter@gmail.com</p>
+</section>
 
-      {/* Success Stories Section */}
-      <section id="success" className="py-24 px-4 bg-background">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-primary">Success</span> <span className="text-foreground">Stories</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto" />
-          </motion.div>
+<!-- FOOTER -->
+<footer>
+  © 2025 Jay's Impact Center – All Rights Reserved
+</footer>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative rounded-xl overflow-hidden border-4 border-primary shadow-2xl shadow-primary/30 mx-auto max-w-md"
-          >
-            <iframe
-              src="https://www.instagram.com/reel/DIGq1QSgvwP/embed"
-              className="w-full h-[600px]"
-              frameBorder="0"
-              scrolling="no"
-              allowTransparency
-              title="Success Stories"
-            />
-          </motion.div>
-        </div>
-      </section>
+<script>
+  // FAQ Toggle
+  document.querySelectorAll(".faq-item").forEach(item => {
+    item.addEventListener("click", () => {
+      let p = item.querySelector("p");
+      p.style.display = p.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
 
-      {/* Programs Section */}
-      <section id="programs" className="py-24 px-4 bg-gradient-to-b from-background to-black">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-foreground">Our</span> <span className="text-primary">Programs</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto" />
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Leadership Development",
-                description: "Confidence, discipline, communication.",
-              },
-              {
-                title: "Youth Mentorship",
-                description: "One-on-one long-term guidance.",
-              },
-              {
-                title: "Community Support",
-                description: "Teaching teamwork, responsibility, and consistency.",
-              },
-            ].map((program, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className="group"
-              >
-                <div className="relative p-8 rounded-xl bg-card border-2 border-primary shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-500 h-full hover:-translate-y-2">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
-                  <h3 className="text-2xl font-bold text-primary mb-4">{program.title}</h3>
-                  <p className="text-muted-foreground text-lg">{program.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Photo Gallery Section */}
-      <section id="impact" className="py-24 px-4 bg-black">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-primary">Our</span> <span className="text-foreground">Impact</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8" />
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              See the transformation happening in our community through mentorship, leadership, and youth empowerment programs.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                src: "https://cdn.hercules.app/file_KKRHbbJGr8Kr15SvmaI5QDk7",
-                alt: "Youth group community gathering",
-              },
-              {
-                src: "https://cdn.hercules.app/file_5iGa0Tqq8s35qMs1gEjmKZ6m",
-                alt: "Youth achievement and recognition",
-              },
-              {
-                src: "https://cdn.hercules.app/file_h7lWLYTksLZY5YpTttXSk1jr",
-                alt: "Youth team unity",
-              },
-              {
-                src: "https://cdn.hercules.app/file_eBTsIr1dNU64vbCzs20cOUZ0",
-                alt: "Community service and skill building",
-              },
-              {
-                src: "https://cdn.hercules.app/file_WGTd54A0lImDuqjGCk18T5R0",
-                alt: "Hands-on automotive training and mentorship",
-              },
-              {
-                src: "https://cdn.hercules.app/file_1YOH8HuqgTkU1oePmgbhGioQ",
-                alt: "Youth learning practical skills",
-              },
-              {
-                src: "https://cdn.hercules.app/file_WwQoi4DW7hOTq3LOQgajcV6I",
-                alt: "Leadership recognition ceremony",
-              },
-            ].map((photo, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-xl border-4 border-primary shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/50 transition-all duration-500"
-              >
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Large Feature Photo */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8"
-          >
-            <div className="relative overflow-hidden rounded-xl border-4 border-primary shadow-2xl shadow-primary/30">
-              <img
-                src="https://cdn.hercules.app/file_WwQoi4DW7hOTq3LOQgajcV6I"
-                alt="Leadership recognition ceremony"
-                className="w-full h-[500px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-3xl font-bold text-foreground mb-2">Building Tomorrow's Leaders</h3>
-                <p className="text-lg text-muted-foreground">
-                  Celebrating achievements and empowering youth to reach their full potential
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Sign Up Section */}
-      <section id="sign-up" className="py-24 px-4 bg-gradient-to-b from-black to-background">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-primary">Get</span> <span className="text-foreground">Involved</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8" />
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Join us in making a difference. Whether you want to volunteer or enroll a young adult (ages 17-21) in our programs, we'd love to hear from you.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Volunteer Sign-Up Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-card border-4 border-primary rounded-xl p-8 shadow-2xl shadow-primary/30 h-full">
-                <h3 className="text-3xl font-bold text-primary mb-6">Volunteer Sign-Up</h3>
-                <form action="https://formsubmit.co/jaysimpactcenter@gmail.com" method="POST" className="space-y-6">
-                  <input type="hidden" name="_subject" value="New Volunteer Sign-Up - Jay's Impact Foundation" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="hidden" name="_next" value="https://jaysimpact.org?submitted=volunteer" />
-                  
-                  <div>
-                    <label htmlFor="volunteer-name" className="block text-sm font-medium text-foreground mb-2">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="volunteer-name"
-                      name="name"
-                      required
-                      placeholder="John Smith"
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="volunteer-email" className="block text-sm font-medium text-foreground mb-2">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="volunteer-email"
-                      name="email"
-                      required
-                      placeholder="example@gmail.com"
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="volunteer-why" className="block text-sm font-medium text-foreground mb-2">
-                      Why do you want to volunteer? *
-                    </label>
-                    <textarea
-                      id="volunteer-why"
-                      name="reason"
-                      required
-                      rows={4}
-                      placeholder="Tell us about your interest in volunteering..."
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors resize-none"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-lg font-semibold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300"
-                  >
-                    Submit Application
-                  </Button>
-                </form>
-              </div>
-            </motion.div>
-
-            {/* Kids Program Sign-Up Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-card border-4 border-primary rounded-xl p-8 shadow-2xl shadow-primary/30 h-full">
-                <h3 className="text-3xl font-bold text-primary mb-6">Program Sign-Up</h3>
-                <form action="https://formsubmit.co/jaysimpactcenter@gmail.com" method="POST" className="space-y-6">
-                  <input type="hidden" name="_subject" value="New Program Sign-Up - Jay's Impact Foundation" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="hidden" name="_next" value="https://jaysimpact.org?submitted=kids" />
-                  
-                  <div>
-                    <label htmlFor="parent-name" className="block text-sm font-medium text-foreground mb-2">
-                      Parent/Guardian Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="parent-name"
-                      name="parent_name"
-                      required
-                      placeholder="Parent/Guardian Full Name"
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="parent-email" className="block text-sm font-medium text-foreground mb-2">
-                      Contact Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="parent-email"
-                      name="parent_email"
-                      required
-                      placeholder="contact@gmail.com"
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="child-name" className="block text-sm font-medium text-foreground mb-2">
-                      Participant Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="child-name"
-                      name="participant_name"
-                      required
-                      placeholder="Full Name"
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="child-age" className="block text-sm font-medium text-foreground mb-2">
-                      Age (17-21) *
-                    </label>
-                    <input
-                      type="number"
-                      id="child-age"
-                      name="child_age"
-                      required
-                      min="17"
-                      max="21"
-                      placeholder="18"
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="notes" className="block text-sm font-medium text-foreground mb-2">
-                      Notes
-                    </label>
-                    <textarea
-                      id="notes"
-                      name="notes"
-                      rows={3}
-                      placeholder="Any additional information..."
-                      className="w-full px-4 py-3 rounded-lg bg-background border-2 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground outline-none transition-colors resize-none"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-lg font-semibold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300"
-                  >
-                    Submit Enrollment
-                  </Button>
-                </form>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Donation Section */}
-      <section id="donate" className="py-24 px-4 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-foreground">Support the</span> <span className="text-primary">Mission</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8" />
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-              Your donations help us change lives, expand programs, and reach more youth in our community. Every contribution makes a real difference.
-            </p>
-
-            <div className="bg-card border-4 border-primary rounded-xl p-12 shadow-2xl shadow-primary/30">
-              <div className="space-y-6">
-                <div className="flex items-center justify-center gap-3 mb-8">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="text-3xl">💛</span>
-                  </div>
-                  <h3 className="text-3xl font-bold text-foreground">Make an Impact Today</h3>
-                </div>
-                
-                <p className="text-muted-foreground text-lg mb-8">
-                  Your support helps provide mentorship, leadership training, and safe spaces for young people to grow and thrive.
-                </p>
-
-                <a
-                  href="https://buy.stripe.com/8x228q7hw6UD0PdazNgbm00"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-8 text-2xl font-bold shadow-xl shadow-primary/40 hover:shadow-2xl hover:shadow-primary/60 transition-all duration-300 hover:scale-105"
-                  >
-                    Donate Now
-                  </Button>
-                </a>
-
-                <p className="text-sm text-muted-foreground mt-6">
-                  Secure payment powered by Stripe
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 px-4 bg-gradient-to-b from-background to-black">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-foreground">Frequently Asked</span>{" "}
-              <span className="text-primary">Questions</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto" />
-          </motion.div>
-
-          <div className="space-y-4">
-            {[
-              {
-                question: "What does Jay's Impact Foundation do?",
-                answer:
-                  "Jay's Impact Foundation is dedicated to empowering youth through mentorship, character development, and leadership training. We provide programs focused on building confidence, discipline, communication skills, and creating safe spaces for young people to grow and thrive.",
-              },
-              {
-                question: "How can I enroll in the program?",
-                answer:
-                  "You can enroll by filling out the Program Sign-Up form on our website. Simply provide contact information, the participant's name and age (17-21), and any additional notes. We'll reach out with next steps and program details.",
-              },
-              {
-                question: "How can I volunteer?",
-                answer:
-                  "We welcome volunteers who are passionate about youth empowerment! Fill out the Volunteer Sign-Up form on our website, telling us about yourself and why you want to volunteer. Our team will review your application and get in touch with you about volunteer opportunities.",
-              },
-              {
-                question: "Where does donation money go?",
-                answer:
-                  "Every donation directly supports our youth programs, including mentorship sessions, leadership workshops, community events, training materials, and creating safe spaces for young people. We're committed to transparency and ensuring your contribution makes a real impact in our community.",
-              },
-              {
-                question: "What age groups do you serve?",
-                answer:
-                  "Our programs are designed for young adults ages 17-21. We offer mentorship and training tailored to help them develop leadership skills, confidence, and practical abilities to succeed in life.",
-              },
-              {
-                question: "Where are you located?",
-                answer:
-                  "We're located at 3311 Glenwood Rd, Decatur, GA 30032. We serve the Decatur area and surrounding communities. Feel free to contact us through the sign-up forms or email for more information about visiting our facility.",
-              },
-            ].map((faq, index) => (
-              <FAQItem key={index} question={faq.question} answer={faq.answer} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black border-t-4 border-primary py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
-            {/* About Column */}
-            <div>
-              <h3 className="text-2xl font-bold text-primary mb-4">Jay's Impact Foundation</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Building leaders, one life at a time. Empowering youth through mentorship, discipline,
-                and character development.
-              </p>
-            </div>
-
-            {/* Quick Links Column */}
-            <div>
-              <h4 className="text-xl font-bold text-foreground mb-4">Quick Links</h4>
-              <div className="space-y-3">
-                {["About", "Programs", "Success", "Sign Up", "Donate"].map((link) => (
-                  <button
-                    key={link}
-                    onClick={() => scrollToSection(link.toLowerCase().replace(" ", "-"))}
-                    className="block text-muted-foreground hover:text-primary transition-colors duration-200"
-                  >
-                    {link}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact Column */}
-            <div>
-              <h4 className="text-xl font-bold text-foreground mb-4">Connect With Us</h4>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <span className="text-xl mt-0.5">📍</span>
-                  <div>
-                    <p className="font-medium text-foreground">Visit Us</p>
-                    <a
-                      href="https://maps.google.com/?q=3311+Glenwood+Rd,+Decatur,+GA+30032"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-primary transition-colors duration-200"
-                    >
-                      3311 Glenwood Rd<br />
-                      Decatur, GA 30032
-                    </a>
-                  </div>
-                </div>
-                <a
-                  href="mailto:jaysimpactcenter@gmail.com"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Mail size={20} />
-                  <span>jaysimpactcenter@gmail.com</span>
-                </a>
-                <a
-                  href="https://www.instagram.com/jaysimpact"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Instagram size={20} />
-                  <span>@jaysimpact</span>
-                </a>
-                <a
-                  href="https://jaysimpact.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <span className="text-xl">🌐</span>
-                  <span>jaysimpact.org</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Copyright */}
-          <div className="pt-8 border-t border-primary/30 text-center">
-            <p className="text-muted-foreground">
-              © {new Date().getFullYear()} Jay's Impact Foundation. All rights reserved.
-            </p>
-            <p className="text-muted-foreground text-sm mt-2">
-              <a href="https://jaysimpact.org" className="hover:text-primary transition-colors">
-                jaysimpact.org
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
-function FAQItem({ question, answer, index }: { question: string; answer: string; index: number }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bg-card border-2 border-primary/30 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300"
-    >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-primary/5 transition-colors duration-200"
-      >
-        <span className="text-lg font-semibold text-foreground pr-4">{question}</span>
-        <ChevronDown
-          className={`flex-shrink-0 text-primary transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-          size={24}
-        />
-      </button>
-      {isOpen && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="px-6 pb-5"
-        >
-          <p className="text-muted-foreground leading-relaxed">{answer}</p>
-        </motion.div>
-      )}
-    </motion.div>
-  );
-}
+</body>
+</html>
