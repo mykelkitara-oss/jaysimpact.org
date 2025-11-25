@@ -6,7 +6,6 @@
 <title>Jay’s Impact Foundation</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-/* =================== COLORS & FONTS =================== */
 :root {
   --gold: #FFD700;
   --black: #0a0a0a;
@@ -16,9 +15,9 @@
   --glass: rgba(0,0,0,0.6);
 }
 * { box-sizing:border-box; font-family:'Montserrat', sans-serif; margin:0; padding:0; }
-body { background: var(--black); color: var(--white); overflow-x:hidden; }
+body { background: var(--black); color: var(--white); overflow-x:hidden; scroll-behavior:smooth; }
 
-/* =================== NAVBAR =================== */
+/* NAVBAR */
 nav {
   position: sticky; top:0; z-index:1000;
   backdrop-filter: blur(10px); background: var(--glass);
@@ -31,7 +30,7 @@ nav ul { display:flex; gap:20px; list-style:none; }
 nav ul li a { color:var(--white); font-weight:600; transition:0.3s; }
 nav ul li a:hover { color: var(--gold); transform: scale(1.1); }
 
-/* =================== HERO =================== */
+/* HERO */
 .hero {
   height: 100vh; position:relative;
   display:flex; justify-content:center; align-items:center; text-align:center;
@@ -56,27 +55,27 @@ nav ul li a:hover { color: var(--gold); transform: scale(1.1); }
 .hero .cta-involve { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
 .hero .cta-involve:hover { background: var(--gold); color: var(--black); transform:scale(1.05);}
 
-/* =================== SECTIONS =================== */
+/* SECTIONS */
 section { padding:80px 0; position:relative; }
 .text-center { text-align:center; }
 h2,h3 { color: var(--gold); }
 
-/* =================== ABOUT =================== */
+/* ABOUT */
 #about p { max-width:900px; margin:20px auto; font-size:1.2rem; line-height:1.8; animation:fadeInUp 2s ease forwards; }
 .keyword { color: var(--red); font-weight:800; display:inline-block; animation:floatText 4s ease-in-out infinite alternate; }
 
-/* =================== PROGRAM PHOTOS =================== */
+/* PROGRAM PHOTOS */
 .programs-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
 .program-card { position: relative; overflow:hidden; border: 3px solid var(--gold); border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s; }
 .program-card img { width:100%; height:100%; object-fit:cover; display:block; }
 .program-card:hover { transform: scale(1.05) rotate(1deg); box-shadow:0 0 30px var(--gold); }
 .program-card label { position:absolute; bottom:10px; left:10px; font-weight:700; color:var(--gold); background:rgba(0,0,0,0.6); padding:5px 10px; border-radius:5px; }
 
-/* =================== VIDEO EMBEDS =================== */
+/* VIDEO EMBEDS */
 .video-wrapper { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; max-width:100%; border:3px solid var(--gold); border-radius:15px; margin:0 auto; }
 .video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
 
-/* =================== SIGN-UP FORMS =================== */
+/* SIGN-UP FORMS */
 .form-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(350px,1fr)); gap:30px; }
 form { background: var(--white); color:var(--black); padding:30px; border-radius:20px; border:3px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition:0.3s; }
 form:hover { transform:translateY(-5px); box-shadow:0 15px 40px rgba(255,215,0,0.6);}
@@ -87,23 +86,23 @@ form button { width:100%; padding:15px; font-weight:700; border:none; border-rad
 form button:hover { box-shadow:0 0 30px var(--gold), 0 0 60px var(--red), 0 0 90px var(--blue); transform:scale(1.05);}
 .success-msg { color: green; display:none; margin-top:10px; text-align:center; font-weight:600; }
 
-/* =================== DONATE =================== */
+/* DONATE */
 #donate a { display:inline-block; padding:15px 50px; border-radius:50px; font-weight:700; background: linear-gradient(90deg, var(--gold), var(--red), var(--blue)); color:var(--black); transition:0.3s; }
 #donate a:hover { box-shadow:0 0 30px var(--gold),0 0 60px var(--red),0 0 90px var(--blue); transform:scale(1.05); }
 
-/* =================== FAQ =================== */
+/* FAQ */
 .faq-item { margin-bottom:20px; border:2px solid var(--gold); border-radius:15px; overflow:hidden; }
 .faq-item button { width:100%; padding:15px; font-weight:600; background: var(--black); color: var(--gold); border:none; text-align:left; cursor:pointer; transition:0.3s;}
 .faq-item button:hover { color:var(--red); }
 .faq-item .answer { padding:15px; background:#111; display:none; color: var(--white); }
 
-/* =================== FOOTER =================== */
+/* FOOTER */
 footer { background: var(--black); border-top: 2px solid var(--gold); padding:40px 20px; text-align:center; }
 footer a { color: var(--gold); margin:0 10px; font-weight:600; transition:0.3s; }
 footer a:hover { color: var(--red); transform:scale(1.1); }
 footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
 
-/* =================== ANIMATIONS =================== */
+/* ANIMATIONS */
 @keyframes fadeIn { from{opacity:0; transform: translateY(50px);} to{opacity:1; transform:translateY(0);} }
 @keyframes fadeInUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
 @keyframes textGlow { 0%{filter: drop-shadow(0 0 10px var(--gold));} 50%{filter:drop-shadow(0 0 30px var(--red));} 100%{filter: drop-shadow(0 0 10px var(--blue));} }
@@ -180,7 +179,7 @@ footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
     <h2>Sign Up</h2>
     <div class="form-grid">
       <!-- Volunteer Form -->
-      <form id="volunteer-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+      <form id="volunteer-form" action="https://formsubmit.co/jaysimapactcenter@gmail.com" method="POST">
         <h3>Volunteer Sign-Up</h3>
         <input type="text" name="Name" placeholder="Full Name" required>
         <input type="email" name="Email" placeholder="Email Address" required>
@@ -189,11 +188,11 @@ footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
         <p class="success-msg">Thank you! Your submission has been received.</p>
       </form>
       <!-- Kids Program Form -->
-      <form id="kids-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+      <form id="kids-form" action="https://formsubmit.co/jaysimapactcenter@gmail.com" method="POST">
         <h3>Kids Program Sign-Up</h3>
         <input type="text" name="ParentName" placeholder="Parent Name" required>
         <input type="text" name="ChildName" placeholder="Child Name" required>
-        <input type="number" name="ChildAge" placeholder="Child Age" required>
+        <input type="number" name="ChildAge" placeholder="Child Age (14-21)" min="14" max="21" required>
         <textarea name="Notes" placeholder="Notes"></textarea>
         <button type="submit">Submit</button>
         <p class="success-msg">Thank you! Your submission has been received.</p>
@@ -207,7 +206,7 @@ footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
   <div class="container">
     <h2>Support the Mission</h2>
     <p>Your donations help us change lives, expand programs, and reach more youth.</p>
-    <a href="https://buy.stripe.com/8x228q7hw6UD0PdazN">Donate Now</a>
+    <a href="https://buy.stripe.com/8x228q7hw6UD0PdazNgbm00" target="_blank">Donate Now</a>
   </div>
 </section>
 
@@ -239,7 +238,7 @@ footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
   <p>© 2025 Jay’s Impact Foundation</p>
   <div>
     <a href="https://instagram.com" target="_blank">Instagram</a>
-    <a href="mailto:info@jaysimpact.org">info@jaysimpact.org</a>
+    <a href="mailto:jaysimapactcenter@gmail.com">jaysimapactcenter@gmail.com</a>
   </div>
 </footer>
 
