@@ -1,285 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jay’s Impact Foundation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></script>
-  <style>
-    /* --- Colors & Fonts --- */
-    :root {
-      --gold: #FFD700;
-      --black: #0a0a0a;
-      --white: #ffffff;
-      --glass: rgba(0,0,0,0.6);
-    }
-    * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; margin:0; padding:0; }
-    body { background-color: var(--black); color: var(--white); overflow-x: hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jay’s Impact Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* =================== COLORS & FONTS =================== */
+:root {
+  --gold: #FFD700;
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --red: #FF3B3B;
+  --blue: #3B9CFF;
+  --glass: rgba(0,0,0,0.6);
+}
+* { box-sizing:border-box; font-family:'Montserrat', sans-serif; margin:0; padding:0; }
+body { background: var(--black); color: var(--white); overflow-x:hidden; }
 
-    a { text-decoration: none; }
+/* =================== NAVBAR =================== */
+nav {
+  position: sticky; top:0; z-index:1000;
+  backdrop-filter: blur(10px); background: var(--glass);
+  border-bottom: 2px solid var(--gold);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 20px; transition:0.3s;
+}
+nav .logo { font-size:1.8rem; font-weight:800; color: var(--gold); }
+nav ul { display:flex; gap:20px; list-style:none; }
+nav ul li a { color:var(--white); font-weight:600; transition:0.3s; }
+nav ul li a:hover { color: var(--gold); transform: scale(1.1); }
 
-    h2, h3 { color: var(--gold); }
+/* =================== HERO =================== */
+.hero {
+  height: 100vh; position:relative;
+  display:flex; justify-content:center; align-items:center; text-align:center;
+  background: url('https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/A17732CB-23EB-463E-B5BC-8E2480667060.jpeg?raw=true') center/cover no-repeat;
+}
+.hero::before {
+  content:""; position:absolute; inset:0; background:rgba(0,0,0,0.6);
+}
+.hero-content { position: relative; z-index:1; animation:fadeIn 2s ease forwards; }
+.hero h1 {
+  font-size:3rem; margin-bottom:20px;
+  background: linear-gradient(90deg, var(--gold), var(--red), var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation:textGlow 3s infinite alternate;
+}
+.hero p { font-size:1.5rem; margin-bottom:30px; color:var(--white); text-shadow:0 0 15px var(--gold); }
+.hero .buttons a {
+  padding:15px 30px; margin:0 10px; border-radius:50px; font-weight:600; transition:0.3s;
+}
+.hero .cta-donate { background: var(--gold); color: var(--black); }
+.hero .cta-donate:hover { box-shadow: 0 0 30px var(--gold), 0 0 60px var(--red), 0 0 90px var(--blue); transform:scale(1.05);}
+.hero .cta-involve { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+.hero .cta-involve:hover { background: var(--gold); color: var(--black); transform:scale(1.05);}
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+/* =================== SECTIONS =================== */
+section { padding:80px 0; position:relative; }
+.text-center { text-align:center; }
+h2,h3 { color: var(--gold); }
 
-    /* --- NAVBAR --- */
-    nav {
-      position: sticky;
-      top:0;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-      background: var(--glass);
-      border-bottom: 2px solid var(--gold);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-    }
-    nav .logo { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
-    nav ul { display: flex; gap: 20px; list-style:none; }
-    nav ul li a { color: var(--white); font-weight: 600; transition: 0.3s; }
-    nav ul li a:hover { color: var(--gold); }
+/* =================== ABOUT =================== */
+#about p { max-width:900px; margin:20px auto; font-size:1.2rem; line-height:1.8; animation:fadeInUp 2s ease forwards; }
+.keyword { color: var(--red); font-weight:800; display:inline-block; animation:floatText 4s ease-in-out infinite alternate; }
 
-    /* --- HERO --- */
-    .hero {
-      height: 100vh;
-      background: url('https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/A17732CB-23EB-463E-B5BC-8E2480667060.jpeg?raw=true') center/cover no-repeat;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--white);
-    }
-    .hero::before {
-      content:"";
-      position:absolute;
-      inset:0;
-      background: rgba(0,0,0,0.6);
-    }
-    .hero-content { position: relative; z-index: 1; animation: fadeIn 2s ease forwards; }
-    .hero h1 { font-size: 3rem; margin-bottom: 20px; text-shadow: 0 0 20px var(--gold); }
-    .hero p { font-size: 1.5rem; margin-bottom: 30px; }
-    .hero .buttons a {
-      padding: 15px 30px;
-      margin: 0 10px;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    .hero .buttons a.cta-donate { background: var(--gold); color: var(--black); }
-    .hero .buttons a.cta-donate:hover { box-shadow: 0 0 20px var(--gold); }
-    .hero .buttons a.cta-involve { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
-    .hero .buttons a.cta-involve:hover { background: var(--gold); color: var(--black); }
+/* =================== PROGRAM PHOTOS =================== */
+.programs-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.program-card { position: relative; overflow:hidden; border: 3px solid var(--gold); border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s; }
+.program-card img { width:100%; height:100%; object-fit:cover; display:block; }
+.program-card:hover { transform: scale(1.05) rotate(1deg); box-shadow:0 0 30px var(--gold); }
+.program-card label { position:absolute; bottom:10px; left:10px; font-weight:700; color:var(--gold); background:rgba(0,0,0,0.6); padding:5px 10px; border-radius:5px; }
 
-    @keyframes fadeIn { from {opacity:0; transform: translateY(50px);} to {opacity:1; transform: translateY(0);} }
+/* =================== VIDEO EMBEDS =================== */
+.video-wrapper { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; max-width:100%; border:3px solid var(--gold); border-radius:15px; margin:0 auto; }
+.video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
 
-    /* --- SECTIONS --- */
-    section { padding: 80px 0; }
-    .text-center { text-align: center; }
+/* =================== SIGN-UP FORMS =================== */
+.form-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(350px,1fr)); gap:30px; }
+form { background: var(--white); color:var(--black); padding:30px; border-radius:20px; border:3px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition:0.3s; }
+form:hover { transform:translateY(-5px); box-shadow:0 15px 40px rgba(255,215,0,0.6);}
+form h3 { margin-bottom:20px; }
+form input, form textarea { width:100%; padding:15px; margin-bottom:15px; border-radius:12px; border:1px solid #ccc; transition:0.3s; }
+form input:focus, form textarea:focus { border-color: var(--gold); box-shadow:0 0 10px var(--gold); outline:none; }
+form button { width:100%; padding:15px; font-weight:700; border:none; border-radius:50px; background: linear-gradient(90deg, var(--gold), var(--red), var(--blue)); color: var(--black); cursor:pointer; transition:0.3s; }
+form button:hover { box-shadow:0 0 30px var(--gold), 0 0 60px var(--red), 0 0 90px var(--blue); transform:scale(1.05);}
+.success-msg { color: green; display:none; margin-top:10px; text-align:center; font-weight:600; }
 
-    /* --- ABOUT --- */
-    #about p { max-width: 800px; margin: 20px auto; font-size: 1.2rem; line-height: 1.8; }
+/* =================== DONATE =================== */
+#donate a { display:inline-block; padding:15px 50px; border-radius:50px; font-weight:700; background: linear-gradient(90deg, var(--gold), var(--red), var(--blue)); color:var(--black); transition:0.3s; }
+#donate a:hover { box-shadow:0 0 30px var(--gold),0 0 60px var(--red),0 0 90px var(--blue); transform:scale(1.05); }
 
-    /* --- PROGRAM PHOTOS --- */
-    .programs-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-    .program-card { position: relative; overflow: hidden; border: 3px solid var(--gold); border-radius: 15px; transition: transform 0.3s; }
-    .program-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .program-card:hover { transform: scale(1.05); }
-    .program-card label { position: absolute; bottom: 10px; left: 10px; font-weight: 700; color: var(--gold); background: rgba(0,0,0,0.6); padding: 5px 10px; border-radius: 5px; }
+/* =================== FAQ =================== */
+.faq-item { margin-bottom:20px; border:2px solid var(--gold); border-radius:15px; overflow:hidden; }
+.faq-item button { width:100%; padding:15px; font-weight:600; background: var(--black); color: var(--gold); border:none; text-align:left; cursor:pointer; transition:0.3s;}
+.faq-item button:hover { color:var(--red); }
+.faq-item .answer { padding:15px; background:#111; display:none; color: var(--white); }
 
-    /* --- VIDEO / EMBEDS --- */
-    .video-wrapper { position: relative; padding-bottom: 56.25%; height:0; overflow:hidden; max-width: 100%; border: 3px solid var(--gold); border-radius:15px; margin:0 auto; }
-    .video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
+/* =================== FOOTER =================== */
+footer { background: var(--black); border-top: 2px solid var(--gold); padding:40px 20px; text-align:center; }
+footer a { color: var(--gold); margin:0 10px; font-weight:600; transition:0.3s; }
+footer a:hover { color: var(--red); transform:scale(1.1); }
+footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
 
-    /* --- SIGNUP FORMS --- */
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:30px; }
-    form { background: var(--white); color: var(--black); padding: 30px; border-radius: 15px; border: 3px solid var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-    form h3 { margin-bottom: 20px; }
-    form input, form textarea { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border:1px solid #ccc; }
-    form button { width: 100%; padding:15px; font-weight:700; border:none; border-radius:50px; background: var(--gold); color: var(--black); cursor:pointer; transition:0.3s; }
-    form button:hover { box-shadow: 0 0 20px var(--gold); }
-    .success-msg { color: green; display: none; margin-top:10px; text-align:center; }
+/* =================== ANIMATIONS =================== */
+@keyframes fadeIn { from{opacity:0; transform: translateY(50px);} to{opacity:1; transform:translateY(0);} }
+@keyframes fadeInUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+@keyframes textGlow { 0%{filter: drop-shadow(0 0 10px var(--gold));} 50%{filter:drop-shadow(0 0 30px var(--red));} 100%{filter: drop-shadow(0 0 10px var(--blue));} }
+@keyframes floatText { 0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);} }
 
-    /* --- DONATE --- */
-    #donate a { display: inline-block; padding: 15px 40px; border-radius:50px; font-weight:700; transition:0.3s; }
-    #donate a:hover { box-shadow: 0 0 20px var(--gold); }
-
-    /* --- FAQ --- */
-    .faq-item { margin-bottom: 20px; border:2px solid var(--gold); border-radius:15px; overflow:hidden; }
-    .faq-item button { width: 100%; padding:15px; font-weight:600; background: var(--black); color: var(--gold); border:none; text-align:left; cursor:pointer; }
-    .faq-item .answer { padding:15px; background: #111; display:none; color: var(--white); }
-
-    /* --- FOOTER --- */
-    footer { background: var(--black); border-top: 2px solid var(--gold); padding:30px 20px; text-align:center; }
-    footer a { color: var(--gold); margin: 0 10px; font-weight:600; }
-    footer p { margin-top:15px; font-size:0.9rem; color:#ccc; }
-
-    @media(max-width:768px){ .hero h1{font-size:2.2rem;} .hero p{font-size:1rem;} }
-  </style>
+@media(max-width:768px){ .hero h1{font-size:2rem;} .hero p{font-size:1rem;} .form-grid{grid-template-columns:1fr;} }
+</style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav>
-    <div class="logo">Jay’s Impact</div>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#programs">Programs</a></li>
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#signup">Sign Up</a></li>
-      <li><a href="#donate">Donate</a></li>
-    </ul>
-  </nav>
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Jay’s Impact</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#signup">Sign Up</a></li>
+    <li><a href="#donate">Donate</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Empowering Youth. Transforming Futures.</h1>
-      <p>Jay’s Impact Foundation — building leaders, one life at a time.</p>
-      <div class="buttons">
-        <a href="#donate" class="cta-donate">Donate</a>
-        <a href="#signup" class="cta-involve">Get Involved</a>
-      </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Empowering <span class="keyword">Youth</span>. Transforming <span class="keyword">Futures</span>.</h1>
+    <p>Jay’s Impact Foundation — building leaders, one life at a time.</p>
+    <div class="buttons">
+      <a href="#donate" class="cta-donate">Donate</a>
+      <a href="#signup" class="cta-involve">Get Involved</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about" class="text-center">
-    <div class="container">
-      <h2>About Us</h2>
-      <p>Jay’s Impact Foundation is committed to shaping the next generation of leaders through mentorship, character development, discipline, and youth empowerment. Our programs focus on confidence, teamwork, and providing safe spaces for young people to grow.</p>
+<!-- ABOUT -->
+<section id="about" class="text-center">
+  <div class="container">
+    <h2>About Us</h2>
+    <p>Jay’s Impact Foundation is committed to shaping the next generation of <span class="keyword">leaders</span> through <span class="keyword">mentorship</span>, <span class="keyword">character development</span>, discipline, and youth empowerment. Our programs focus on confidence, teamwork, and providing safe spaces for young people to grow.</p>
+  </div>
+</section>
+
+<!-- PROGRAM PHOTOS -->
+<section id="programs" class="text-center">
+  <div class="container">
+    <h2>Programs Showcase</h2>
+    <div class="programs-grid">
+      <div class="program-card"><img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0075.jpeg?raw=true"><label>Workshop Session</label></div>
+      <div class="program-card"><img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0153.jpeg?raw=true"><label>Community Event</label></div>
+      <div class="program-card"><img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_1908.jpeg?raw=true"><label>Youth Leadership Class</label></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PROGRAM PHOTOS -->
-  <section id="programs" class="text-center">
-    <div class="container">
-      <h2>Programs Showcase</h2>
-      <div class="programs-grid">
-        <div class="program-card">
-          <img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0075.jpeg?raw=true" alt="Workshop Session">
-          <label>Workshop Session</label>
-        </div>
-        <div class="program-card">
-          <img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_0153.jpeg?raw=true" alt="Community Event">
-          <label>Community Event</label>
-        </div>
-        <div class="program-card">
-          <img src="https://github.com/mykelkitara-oss/stories/blob/87d7d1417bc17e3993f21a8449f902a88ef3c9e5/IMG_1908.jpeg?raw=true" alt="Youth Leadership Class">
-          <label>Youth Leadership Class</label>
-        </div>
-      </div>
+<!-- OUR STORY -->
+<section id="story" class="text-center">
+  <div class="container">
+    <h2>Our Story</h2>
+    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/zgNj6GWTLEo" frameborder="0" allowfullscreen></iframe></div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section id="success" class="text-center">
+  <div class="container">
+    <h2>Success Stories</h2>
+    <div class="video-wrapper"><iframe src="https://www.instagram.com/reel/DIGq1QSgvwP/embed" frameborder="0" allowfullscreen></iframe></div>
+  </div>
+</section>
+
+<!-- SIGN-UP FORMS -->
+<section id="signup" class="text-center">
+  <div class="container">
+    <h2>Sign Up</h2>
+    <div class="form-grid">
+      <!-- Volunteer Form -->
+      <form id="volunteer-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+        <h3>Volunteer Sign-Up</h3>
+        <input type="text" name="Name" placeholder="Full Name" required>
+        <input type="email" name="Email" placeholder="Email Address" required>
+        <textarea name="Message" placeholder="Why do you want to volunteer?" required></textarea>
+        <button type="submit">Submit</button>
+        <p class="success-msg">Thank you! Your submission has been received.</p>
+      </form>
+      <!-- Kids Program Form -->
+      <form id="kids-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+        <h3>Kids Program Sign-Up</h3>
+        <input type="text" name="ParentName" placeholder="Parent Name" required>
+        <input type="text" name="ChildName" placeholder="Child Name" required>
+        <input type="number" name="ChildAge" placeholder="Child Age" required>
+        <textarea name="Notes" placeholder="Notes"></textarea>
+        <button type="submit">Submit</button>
+        <p class="success-msg">Thank you! Your submission has been received.</p>
+      </form>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- OUR STORY -->
-  <section id="story" class="text-center">
-    <div class="container">
-      <h2>Our Story</h2>
-      <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/zgNj6GWTLEo" frameborder="0" allowfullscreen></iframe>
-      </div>
+<!-- DONATE -->
+<section id="donate" class="text-center">
+  <div class="container">
+    <h2>Support the Mission</h2>
+    <p>Your donations help us change lives, expand programs, and reach more youth.</p>
+    <a href="https://buy.stripe.com/8x228q7hw6UD0PdazN">Donate Now</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="text-center">
+  <div class="container">
+    <h2>FAQ</h2>
+    <div class="faq-item">
+      <button onclick="toggleAnswer(this)">What does Jay’s Impact Foundation do?</button>
+      <div class="answer">We mentor youth, develop leadership skills, and provide safe spaces for growth.</div>
     </div>
-  </section>
-
-  <!-- SUCCESS STORIES -->
-  <section id="success" class="text-center">
-    <div class="container">
-      <h2>Success Stories</h2>
-      <div class="video-wrapper">
-        <iframe src="https://www.instagram.com/reel/DIGq1QSgvwP/embed" frameborder="0" allowfullscreen></iframe>
-      </div>
+    <div class="faq-item">
+      <button onclick="toggleAnswer(this)">How can I enroll my child?</button>
+      <div class="answer">Use the Kids Program sign-up form above or contact us via email.</div>
     </div>
-  </section>
-
-  <!-- SIGN-UP FORMS -->
-  <section id="signup" class="text-center">
-    <div class="container">
-      <h2>Sign Up</h2>
-      <div class="form-grid">
-        <!-- Volunteer Form -->
-        <form id="volunteer-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
-          <h3>Volunteer Sign-Up</h3>
-          <input type="text" name="Name" placeholder="Full Name" required>
-          <input type="email" name="Email" placeholder="Email Address" required>
-          <textarea name="Message" placeholder="Why do you want to volunteer?" required></textarea>
-          <button type="submit">Submit</button>
-          <p class="success-msg">Thank you! Your submission has been received.</p>
-        </form>
-
-        <!-- Kids Program Form -->
-        <form id="kids-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
-          <h3>Kids Program Sign-Up</h3>
-          <input type="text" name="ParentName" placeholder="Parent Name" required>
-          <input type="text" name="ChildName" placeholder="Child Name" required>
-          <input type="number" name="ChildAge" placeholder="Child Age" required>
-          <textarea name="Notes" placeholder="Notes"></textarea>
-          <button type="submit">Submit</button>
-          <p class="success-msg">Thank you! Your submission has been received.</p>
-        </form>
-      </div>
+    <div class="faq-item">
+      <button onclick="toggleAnswer(this)">How can I volunteer?</button>
+      <div class="answer">Complete the Volunteer sign-up form above and we will reach out.</div>
     </div>
-  </section>
-
-  <!-- DONATE -->
-  <section id="donate" class="text-center">
-    <div class="container">
-      <h2>Support the Mission</h2>
-      <p>Your donations help us change lives, expand programs, and reach more youth.</p>
-      <a href="https://buy.stripe.com/8x228q7hw6UD0PdazN">Donate Now</a>
+    <div class="faq-item">
+      <button onclick="toggleAnswer(this)">Where does donation money go?</button>
+      <div class="answer">All donations fund programs, events, mentorship, and community outreach.</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FAQ -->
-  <section id="faq" class="text-center">
-    <div class="container">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <button onclick="toggleAnswer(this)">What does Jay’s Impact Foundation do?</button>
-        <div class="answer">We mentor youth, develop leadership skills, and provide safe spaces for growth.</div>
-      </div>
-      <div class="faq-item">
-        <button onclick="toggleAnswer(this)">How can I enroll my child?</button>
-        <div class="answer">Use the Kids Program sign-up form above or contact us via email.</div>
-      </div>
-      <div class="faq-item">
-        <button onclick="toggleAnswer(this)">How can I volunteer?</button>
-        <div class="answer">Complete the Volunteer sign-up form above and we will reach out.</div>
-      </div>
-      <div class="faq-item">
-        <button onclick="toggleAnswer(this)">Where does donation money go?</button>
-        <div class="answer">All donations fund programs, events, mentorship, and community outreach.</div>
-      </div>
-    </div>
-  </section>
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Jay’s Impact Foundation</p>
+  <div>
+    <a href="https://instagram.com" target="_blank">Instagram</a>
+    <a href="mailto:info@jaysimpact.org">info@jaysimpact.org</a>
+  </div>
+</footer>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 Jay’s Impact Foundation</p>
-    <div>
-      <a href="https://instagram.com" target="_blank">Instagram</a>
-      <a href="mailto:info@jaysimpact.org">info@jaysimpact.org</a>
-    </div>
-  </footer>
-
-  <script>
-    // FAQ toggle
-    function toggleAnswer(btn){
-      const ans = btn.nextElementSibling;
-      ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // Form submission message
-    document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', e => {
-        setTimeout(()=> {
-          form.querySelector('.success-msg').style.display = 'block';
-        }, 500);
-      });
-    });
-  </script>
+<script>
+function toggleAnswer(btn){
+  const ans = btn.nextElementSibling;
+  ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+}
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', e => {
+    setTimeout(()=> {
+      form.querySelector('.success-msg').style.display = 'block';
+    }, 500);
+  });
+});
+</script>
 
 </body>
 </html>
